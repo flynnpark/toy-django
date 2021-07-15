@@ -5,7 +5,8 @@
     "editor.insertSpaces": true,
     "editor.tabSize": 4,
     "editor.codeActionsOnSave": {
-      "python.sortImports": false
+      "python.sortImports": true,
+      "source.organizeImports": true
     }
   }
 }
