@@ -1,4 +1,4 @@
-"""toy_django URL Configuration
+"""core URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/3.2/topics/http/urls/
@@ -16,8 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 
+from core import views
+
 urlpatterns = [
-    path('polls/', include('polls.urls')),
+    path('', views.home, name='index'),
     path('admin', admin.site.urls),
     path('api-auth', include('rest_framework.urls', namespace='rest_framework')),
 ]
