@@ -1,0 +1,43 @@
+version: '3.9'
+
+services:
+  db:
+    image: postgres
+    container_name: db
+    restart: always
+    environment:
+      - POSTGRES_DB=toy
+      - POSTGRES_USER=toy
+      - POSTGRES_PASSWORD=toypassword
+      - POSTGRES_INITDB_ARGS=--encoding=UTF-8
+    ports:
+      - '5432:5432'
+    healthcheck:
+      test: 'pg_isready -h localhost -p 5432 -q -U toy'
+      interval: 3s
+      timeout: 5s
+      retries: 5
+      start_period: 40s
+
+  cache:
+    image: redis
+    command: redis-server --requirepass toypassword --port 6379
+    container_name: cache
+    hostname: cache
+    labels:
+      - 'name=redis'
+      - 'mode=standalone'
+    ports:
+      - 6379:6379
+
+  app:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000 --settings=core.settings.docker_dev
+    container_name: app
+    volumes:
+      - .:/app
+    ports:
+      - '8000:8000'
+    depends_on:
+      - db
+      - cache
