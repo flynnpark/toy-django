@@ -28,11 +28,16 @@ services:
       - 'name=redis'
       - 'mode=standalone'
     ports:
-      - 6379:6379
+      - '6379:6379'
+    healthcheck:
+      test: "redis-cli -h 127.0.0.1 ping"            
+      interval: 3s
+      timeout: 1s
+      retries: 5
 
   app:
     build: .
-    command: python manage.py runserver 0.0.0.0:8000 --settings=core.settings.docker_dev
+    command: python manage.py runserver 0.0.0.0:8000 
     container_name: app
     volumes:
       - .:/app
@@ -41,3 +46,5 @@ services:
     depends_on:
       - db
       - cache
+    environment:
+      - DJANGO_SETTINGS_MODULE=core.settings.docker_dev
