@@ -5,5 +5,5 @@ from django.urls import include, path
 urlpatterns = [
     path('admin', admin.site.urls),
     path('', views.home, name='index'),
-    path('v1/', include('config.v1_router')),
+    path('v1', include('config.v1_router')),
 ]

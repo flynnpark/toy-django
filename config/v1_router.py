@@ -3,12 +3,12 @@ from django.conf import settings
 from rest_framework.routers import DefaultRouter, SimpleRouter
 
 if settings.DEBUG:
-    router = DefaultRouter()
+    router = DefaultRouter(trailing_slash=False)
 else:
-    router = SimpleRouter()
+    router = SimpleRouter(trailing_slash=False)
 
-router.register('users', UserViewSet)
+router.register(r'/users', UserViewSet)
 
-app_name = 'api'
+app_name = 'v1'
 
 urlpatterns = router.urls
