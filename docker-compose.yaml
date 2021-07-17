@@ -47,4 +47,4 @@ services:
       - db
       - cache
     environment:
-      - DJANGO_SETTINGS_MODULE=core.settings.docker_dev
+      - DJANGO_SETTINGS_MODULE=config.settings.local
